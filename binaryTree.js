@@ -67,6 +67,20 @@ function createTree(treeArray) {
     return node;
   };
 
+  const find = (value, node = root) => {
+    if (node === null) {
+      return null;
+    }
+
+    if (node.value === value) {
+      return node;
+    } else if (node.value < value) {
+      return find(value, node.right);
+    } else if (node.value > value) {
+      return find(value, node.left);
+    } 
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -85,11 +99,13 @@ function createTree(treeArray) {
   return {
     insert,
     remove,
+    find,
     prettyPrint
   };
 }
 
 const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.insert(9);
-tree.remove(7);
+tree.remove(23);
 tree.prettyPrint();
+console.log(tree.find(67));
