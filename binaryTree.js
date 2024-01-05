@@ -88,7 +88,7 @@ function createTree(treeArray) {
     while (queue.length > 0) {
       let node = queue.shift();
       if (!callback) results.push(node.value);
-      if (node.left !== null) queue.unshift(node.left);
+      if (node.left !== null) queue.push(node.left);
       if (node.right !== null) queue.push(node.right);
 
       if (callback) callback(node.value);
@@ -204,18 +204,4 @@ function createTree(treeArray) {
   };
 }
 
-const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-tree.insert(9);
-tree.insert(500);
-tree.insert(831);
-tree.prettyPrint();
-console.log(tree.levelOrder());
-console.log(tree.inOrder());
-console.log(tree.preOrder());
-console.log(tree.postOrder());
-console.log(tree.height());
-console.log(tree.depth(9));
-console.log(tree.isBalanced());
-tree.rebalance();
-tree.prettyPrint();
-
+module.exports = createTree;
