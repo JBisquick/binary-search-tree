@@ -81,6 +81,22 @@ function createTree(treeArray) {
     } 
   };
 
+  const levelOrder = (callback) => {
+    queue = [root];
+    results = [];
+
+    while (queue.length > 0) {
+      let node = queue.shift();
+      results.push(node.value);
+      if (node.left !== null) queue.push(node.left);
+      if (node.right !== null) queue.push(node.right);
+
+      if (callback) callback(node.value);
+    }
+
+    if(!callback) return results;
+  }
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -100,6 +116,7 @@ function createTree(treeArray) {
     insert,
     remove,
     find,
+    levelOrder,
     prettyPrint
   };
 }
@@ -108,4 +125,4 @@ const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.insert(9);
 tree.remove(23);
 tree.prettyPrint();
-console.log(tree.find(67));
+console.log(tree.levelOrder());
