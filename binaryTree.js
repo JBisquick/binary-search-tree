@@ -88,7 +88,7 @@ function createTree(treeArray) {
     while (queue.length > 0) {
       let node = queue.shift();
       if (!callback) results.push(node.value);
-      if (node.left !== null) queue.push(node.left);
+      if (node.left !== null) queue.unshift(node.left);
       if (node.right !== null) queue.push(node.right);
 
       if (callback) callback(node.value);
@@ -101,9 +101,23 @@ function createTree(treeArray) {
     if (node === null) return [];
     let order = [];
     order = order.concat(inOrder(callback, node.left));
+    
     order.push(node.value);
     if (callback) callback(node.value);
+    
     order = order.concat(inOrder(callback, node.right));
+    if (!callback) return order;
+  };
+
+  const preOrder = (callback, node = root) => {
+    if (node === null) return [];
+    let order = [];
+    order.push(node.value);
+    if (callback) callback(node.value);
+
+    order = order.concat(preOrder(callback, node.left));
+    
+    order = order.concat(preOrder(callback, node.right));
     if (!callback) return order;
   };
 
@@ -128,6 +142,7 @@ function createTree(treeArray) {
     find,
     levelOrder,
     inOrder,
+    preOrder,
     prettyPrint
   };
 }
@@ -138,3 +153,4 @@ tree.remove(23);
 tree.prettyPrint();
 console.log(tree.levelOrder());
 console.log(tree.inOrder());
+console.log(tree.preOrder());
