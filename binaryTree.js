@@ -168,6 +168,11 @@ function createTree(treeArray) {
     return false;
   };
 
+  const rebalance = () => {
+    const treeArray = inOrder();
+    root = buildTree(treeArray);
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -181,7 +186,7 @@ function createTree(treeArray) {
     }
   };
 
-  const root = buildTree(treeArray);
+  let root = buildTree(treeArray);
 
   return {
     insert,
@@ -194,7 +199,8 @@ function createTree(treeArray) {
     height,
     depth,
     isBalanced,
-    prettyPrint
+    prettyPrint,
+    rebalance
   };
 }
 
@@ -210,3 +216,6 @@ console.log(tree.postOrder());
 console.log(tree.height());
 console.log(tree.depth(9));
 console.log(tree.isBalanced());
+tree.rebalance();
+tree.prettyPrint();
+
