@@ -135,11 +135,27 @@ function createTree(treeArray) {
   };
 
   const height = (node = root) => {
-    if (node === null) return 0;
+    // -1 is to fix the height to reduce it by one
+    if (node === null) return -1;
     const leftValue = height(node.left);
     const rightValue = height(node.right);
     if (leftValue >= rightValue) return 1 + leftValue;
     if (leftValue <= rightValue) return 1 + rightValue;
+  };
+
+  const depth = (value, node = root) => {
+    if (node === null) {
+      return null;
+    }
+
+    if (node.value === value) {
+      return 0;
+    } else if (node.value < value) {
+      depthVal = depth(value, node.right);
+    } else if (node.value > value) {
+      depthVal = depth(value, node.left);
+    } 
+    return 1 + depthVal;
   };
 
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
@@ -166,6 +182,7 @@ function createTree(treeArray) {
     preOrder,
     postOrder,
     height,
+    depth,
     prettyPrint
   };
 }
@@ -179,3 +196,4 @@ console.log(tree.inOrder());
 console.log(tree.preOrder());
 console.log(tree.postOrder());
 console.log(tree.height());
+console.log(tree.depth(9));
