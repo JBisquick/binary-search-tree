@@ -121,6 +121,19 @@ function createTree(treeArray) {
     if (!callback) return order;
   };
 
+  const postOrder = (callback, node = root) => {
+    if (node === null) return [];
+    let order = [];
+
+    order = order.concat(postOrder(callback, node.left));
+    
+    order = order.concat(postOrder(callback, node.right));
+
+    order.push(node.value);
+    if (callback) callback(node.value);
+    if (!callback) return order;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -143,6 +156,7 @@ function createTree(treeArray) {
     levelOrder,
     inOrder,
     preOrder,
+    postOrder,
     prettyPrint
   };
 }
@@ -154,3 +168,4 @@ tree.prettyPrint();
 console.log(tree.levelOrder());
 console.log(tree.inOrder());
 console.log(tree.preOrder());
+console.log(tree.postOrder());
