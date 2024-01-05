@@ -158,6 +158,16 @@ function createTree(treeArray) {
     return 1 + depthVal;
   };
 
+  const isBalanced = () => {
+    const leftVal = height(root.left);
+    const rightVal = height(root.right);
+    const finalVal = leftVal - rightVal;
+    if (finalVal <= 1 && finalVal >= -1) {
+      return true
+    }
+    return false;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -183,13 +193,15 @@ function createTree(treeArray) {
     postOrder,
     height,
     depth,
+    isBalanced,
     prettyPrint
   };
 }
 
 const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.insert(9);
-tree.remove(23);
+tree.insert(500);
+tree.insert(831);
 tree.prettyPrint();
 console.log(tree.levelOrder());
 console.log(tree.inOrder());
@@ -197,3 +209,4 @@ console.log(tree.preOrder());
 console.log(tree.postOrder());
 console.log(tree.height());
 console.log(tree.depth(9));
+console.log(tree.isBalanced());
